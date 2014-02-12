@@ -13,11 +13,15 @@ function  __fish_fossil_prompt --description "Prompt function for Fossil"
 
     set -l info ""
     set -l branch (command fossil branch ls 2^/dev/null | awk '/\* /{print $2}')
-    set -l changes (command fossil changes 2^/dev/null)
+    set -l changes (command fossil changes 2^/dev/null | awk '{print $1}')
     set -l extra (count (command fossil extra 2^/dev/null))
-    set -l col "$normal"
+    set -l col $normal
 
     if test -n "$changes"
+        if contains 'MERGED_WITH' $changes
+            set info $gray"|"$yellow"MERGING!"
+            set extra 0
+        end
         set col "$yellow"
     else
         set col "$blue"
