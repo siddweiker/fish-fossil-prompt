@@ -21,7 +21,7 @@ function  __fish_fossil_prompt --description "Prompt function for Fossil"
         set -l extra (count (command fossil extra 2^/dev/null))
         set -l col $normal
         
-        if test $stash != 'empty stash'
+        if test "$stash" != 'empty stash'
             set separator "\$"
         end
 
